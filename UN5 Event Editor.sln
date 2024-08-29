@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35122.118
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UN5 Event Editor", "UN5 Event Editor\UN5 Event Editor.csproj", "{678E2ADB-4EA2-47C8-8BE5-BD2AF9306A13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{678E2ADB-4EA2-47C8-8BE5-BD2AF9306A13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678E2ADB-4EA2-47C8-8BE5-BD2AF9306A13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678E2ADB-4EA2-47C8-8BE5-BD2AF9306A13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678E2ADB-4EA2-47C8-8BE5-BD2AF9306A13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9B1CC0A-A601-4F24-BF4A-33EA00D9E54B}
+	EndGlobalSection
+EndGlobal
