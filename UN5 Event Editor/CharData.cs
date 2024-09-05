@@ -18,14 +18,14 @@ namespace UN5_Event_Editor
         {
             charID1 = Input.ReadUInt(0x0, 32),
             charID2 = Input.ReadUInt(0x4, 32),
-            charName = Util.ReadStringFromBuffer(Input.ReadBytes(0x8, 0x20), 0, 0x20, "shift-jis"),
-            charDescription = Util.ReadStringFromBuffer(Input.ReadBytes(0x28, 0x40), 0, 0x40, "shift-jis"),
-            charCCS = Util.ReadStringFromBuffer(Input.ReadBytes(0x68, 0x20), 0, 0x20, "shift-jis"),
-            charANM1 = Util.ReadStringFromBuffer(Input.ReadBytes(0x88, 0x20), 0, 0x20, "shift-jis"),
-            charANM2 = Util.ReadStringFromBuffer(Input.ReadBytes(0xA8, 0x20), 0, 0x20, "shift-jis"),
-            charANM3 = Util.ReadStringFromBuffer(Input.ReadBytes(0xC8, 0x20), 0, 0x20, "shift-jis"),
-            charANM4 = Util.ReadStringFromBuffer(Input.ReadBytes(0xE8, 0x20), 0, 0x20, "shift-jis"),
-            charANM5 = Util.ReadStringFromBuffer(Input.ReadBytes(0x108, 0x20), 0, 0x20, "shift-jis"),
+            charName = Util.ReadStringFromBuffer(Input.ReadBytes(0x8, 0x20), 0x20, "shift-jis"),
+            charDescription = Util.ReadStringFromBuffer(Input.ReadBytes(0x28, 0x40), 0x40, "shift-jis"),
+            charCCS = Util.ReadStringFromBuffer(Input.ReadBytes(0x68, 0x20), 0x20, "shift-jis"),
+            charANM1 = Util.ReadStringFromBuffer(Input.ReadBytes(0x88, 0x20), 0x20, "shift-jis"),
+            charANM2 = Util.ReadStringFromBuffer(Input.ReadBytes(0xA8, 0x20), 0x20, "shift-jis"),
+            charANM3 = Util.ReadStringFromBuffer(Input.ReadBytes(0xC8, 0x20), 0x20, "shift-jis"),
+            charANM4 = Util.ReadStringFromBuffer(Input.ReadBytes(0xE8, 0x20), 0x20, "shift-jis"),
+            charANM5 = Util.ReadStringFromBuffer(Input.ReadBytes(0x108, 0x20), 0x20, "shift-jis"),
         };
 
         public static byte[] Write(EditCharData form, int index)

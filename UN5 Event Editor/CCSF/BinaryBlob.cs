@@ -32,7 +32,7 @@ namespace UN5_Event_Editor
             data = dataS.ToArray();
             ms.Write(BitConverter.GetBytes(Convert.ToUInt32(0xCCCC2400)), 0, 4);
             ms.Write(BitConverter.GetBytes(Convert.ToUInt32(data.Length + 4) / 4), 0, 4);
-            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(index - 2)), 0, 4);
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(index)), 0, 4);
             ms.Write(dataS.ToArray(), 0, dataS.ToArray().Length);
             return ms.ToArray();
         }

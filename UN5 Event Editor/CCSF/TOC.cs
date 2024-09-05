@@ -35,7 +35,7 @@ namespace UN5_Event_Editor
             for (int i = 0; i < fileCount; i++)
             {
                 tocS.Read(buffer, 0, 0x20);
-                fileNameList.Add(Util.ReadStringFromBuffer(buffer, 0, 0x20, "shift-jis"));
+                fileNameList.Add(Util.ReadStringFromBuffer(buffer, 0x20, "shift-jis"));
             }
 
             objectNameList = new List<string>();
@@ -43,7 +43,7 @@ namespace UN5_Event_Editor
             for (int i = 0; i < objectCount * 0x20; i+=0x20)
             {
                 tocS.Read(buffer, 0, 0x20);
-                objectNameList.Add(Util.ReadStringFromBuffer(buffer, 0, 0x1E, "shift-jis"));
+                objectNameList.Add(Util.ReadStringFromBuffer(buffer, 0x1E, "shift-jis"));
                 indexesList.Add(BitConverter.ToInt16(buffer, 2));
             }
         }
@@ -57,7 +57,7 @@ namespace UN5_Event_Editor
             {
                 Util.WriteString(toc, ccs.toc.fileNameList[i], 0x20);
             }
-            for (int i = 2; i < blocks.Count; i++)
+            for (int i = 0; i < blocks.Count; i++)
             {
                 Util.WriteString(toc, blocks[i].Name, 0x1E);
                 toc.Write(BitConverter.GetBytes((ushort)0x0), 0, 2);

@@ -20,7 +20,7 @@ namespace UN5_Event_Editor
             Data = new byte[Size * 4];
             ms.Read(Data, 0, Data.Length);
 
-            Name = Util.ReadStringFromBuffer(Data, 4, 0x1E, "shift-jis");
+            Name = Util.ReadStringFromBuffer(Data, 0x1E, "shift-jis");
         }
 
         public static byte[] Write(string Name)

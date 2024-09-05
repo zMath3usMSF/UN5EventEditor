@@ -14,6 +14,7 @@ namespace UN5_Event_Editor
 {
     public partial class Form1 : Form
     {
+        public static bool isNA2 = false;
         public static List<CCSF> ccsList = new List<CCSF>();
         public static List<CharData> charDataList = new List<CharData>();
         public static List<byte[]> charDataBlocksList = new List<byte[]>();
@@ -24,6 +25,11 @@ namespace UN5_Event_Editor
         public static List<Bitmap> itemIconsList = new List<Bitmap>();
         public static List<Item> itemList = new List<Item>();
         public static List<string[]> itemInfo = new List<string[]>();
+        public static List<FieldItem> fieldItemList = new List<FieldItem>();
+        public static List<string> textList = new List<string>();
+        public static List<BootOtherFlag> otherFlagList = new List<BootOtherFlag>();
+        public static List<BootSpc> spcList = new List<BootSpc>();
+
 
         public Form1()
         {
@@ -37,25 +43,20 @@ namespace UN5_Event_Editor
             ofd.Filter = "EVENT.CCS File|EVENT.CCS";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                bool isNA2 = false;
                 ccsList.Clear();
                 CCSF ccs = new CCSF();
-                CCSFTXT.textList.Clear();
-
                 string directory = Path.GetDirectoryName(ofd.FileName);
                 string fileName = Path.GetFileNameWithoutExtension(ofd.FileName);
                 if (File.Exists(Path.Combine(directory, fileName) + "TXT.CCS"))
                 {
                     ccs.OpenCCS(Path.Combine(directory, fileName) + "TXT.CCS");
                     ccsList.Add(ccs);
-                    CCSFTXT.ReadCCSFTXT(ccsList[0].blocks[3].Data, "ISO-8859-1");
                 }
                 else
                 {
                     ccsList.Add(ccs);
                     isNA2 = true;
                 }
-
                 ccs = new CCSF();
                 ccs.OpenCCS(ofd.FileName);
                 ccsList.Add(ccs);
@@ -67,25 +68,28 @@ namespace UN5_Event_Editor
                 button6.Enabled = true;
                 button7.Enabled = true;
                 button8.Enabled = true;
+                button9.Enabled = true;
+                button10.Enabled = true;
+                button11.Enabled = true;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            EditBattleData battleDataEditor = new EditBattleData();
-            if(battleDataEditor.battleDataList.Count == 0)
+            EditBattleData form = new EditBattleData();
+            if(form.battleDataList.Count == 0)
             {
-                for (int i = 0; i < ccsList[0].blocks[3].Data.Length / 0xA4; i++)
+                for (int i = 0; i < ccsList[0].blocks[1].Data.Length / 0xA4; i++)
                 {
                     byte[] currentBattleDataBlock = new byte[0xA4];
-                    Array.Copy(ccsList[0].blocks[3].Data, i * 0xA4, currentBattleDataBlock, 0, 0xA4);
+                    Array.Copy(ccsList[0].blocks[1].Data, i * 0xA4, currentBattleDataBlock, 0, 0xA4);
                     BattleData battleData = BattleData.Read(currentBattleDataBlock);
-                    battleDataEditor.battleDataBlocksList.Add(currentBattleDataBlock);
-                    battleDataEditor.battleDataList.Add(battleData);
-                    battleDataEditor.listBox1.Items.Add($"{i}: {battleData.battleName}");
+                    form.battleDataBlocksList.Add(currentBattleDataBlock);
+                    form.battleDataList.Add(battleData);
+                    form.listBox1.Items.Add($"{i}: {battleData.battleName}");
                 }
             }
-            battleDataEditor.Show();
+            form.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -93,20 +97,9 @@ namespace UN5_Event_Editor
             EditCharData charDataEditor = new EditCharData();
             if(charDataList.Count == 0)
             {
-                MemoryStream ms = new MemoryStream(ccsList[1].blocks[16].Data);
-                List<char> chars = new List<char>();
-                int count = 0;
-                while (count != 2)
-                {
-                    char currentChar = (char)ms.ReadByte();
-                    chars.Add(currentChar);
-                    if (currentChar == '|')
-                    {
-                        count++;
-                    }
-                }
-                string header = string.Concat(chars.ToArray());
-                int charDataCount = int.Parse(header.Split('|')[1]);
+                MemoryStream ms = new MemoryStream(CCSF.GetBlockByName(ccsList[1].blocks, "chardata"));
+                string magic = Util.ReadStringFromMemory(ms, 0x7C, (int)ms.Length, "UTF-8");
+                int charDataCount = int.Parse(Util.ReadStringFromMemory(ms, 0x7C, (int)ms.Length, "UTF-8"));
                 for (int i = 0; i < charDataCount; i++)
                 {
                     byte[] charDataBlock = new byte[0x128];
@@ -127,7 +120,7 @@ namespace UN5_Event_Editor
             EditScriptList form = new EditScriptList();
             if(ScriptList.ccs_tbl.Count == 0)
             {
-                ScriptList.Read(ccsList[1].blocks[17].Data, ccsList[1].blocks[18].Data);
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
             }
             form.addList();
             form.Show();
@@ -136,7 +129,7 @@ namespace UN5_Event_Editor
         private void button4_Click(object sender, EventArgs e)
         {
             Edit_Boot_Talk form = new Edit_Boot_Talk();
-            MemoryStream ms = new MemoryStream(ccsList[1].blocks[16].Data);
+            MemoryStream ms = new MemoryStream(ccsList[1].blocks[14].Data);
             if (charDataList.Count == 0)
             {
                 List<char> chars = new List<char>();
@@ -162,11 +155,11 @@ namespace UN5_Event_Editor
             }
             if (ScriptList.ccs_tbl.Count == 0)
             {
-                ScriptList.Read(ccsList[1].blocks[17].Data, ccsList[1].blocks[18].Data);
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
             }
             if(bootTalkList.Count == 0)
             {
-                ms = new MemoryStream(ccsList[1].blocks[14].Data);
+                ms = new MemoryStream(ccsList[1].blocks[12].Data);
                 byte[] bootTalkBlock = new byte[0xA];
                 for (int i = 0; i < ms.Length / 0xA; i++)
                 {
@@ -188,14 +181,21 @@ namespace UN5_Event_Editor
 
         private void saveCCSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CCSF.WriteCCS(ccsList[1]);
-            CCSF.WriteCCS(ccsList[0]);
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "EVENT.CCS File|EVENT.CCS";
+            sfd.FileName = "EVENT.CCS";
+            if(sfd.ShowDialog() == DialogResult.OK)
+            {
+                string path = Path.GetDirectoryName(sfd.FileName);
+                CCSF.WriteCCS(ccsList[1], Path.Combine(path, "EVENT.CCS"));
+                CCSF.WriteCCS(ccsList[0], Path.Combine(path, "EVENTTXT.CCS"));
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
             EditEventFlag form = new EditEventFlag();
-            MemoryStream ms = new MemoryStream(ccsList[1].blocks[4].Data);
+            MemoryStream ms = new MemoryStream(ccsList[1].blocks[2].Data);
             if (eventFlagList.Count == 0)
             {
                 byte[] eventFlagBlock = new byte[0x8];
@@ -207,7 +207,7 @@ namespace UN5_Event_Editor
             }
             if (ScriptList.ccs_tbl.Count == 0)
             {
-                ScriptList.Read(ccsList[1].blocks[17].Data, ccsList[1].blocks[18].Data);
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
             }
             for (int i = 0; i < eventFlagList.Count; i++)
             {
@@ -220,7 +220,7 @@ namespace UN5_Event_Editor
         private void button6_Click(object sender, EventArgs e)
         {
             EditEventKind form = new EditEventKind();
-            MemoryStream ms = new MemoryStream(ccsList[1].blocks[5].Data);
+            MemoryStream ms = new MemoryStream(ccsList[1].blocks[3].Data);
             if (eventKindList.Count == 0)
             {
                 byte[] eventKindBlock = new byte[0x8];
@@ -232,7 +232,7 @@ namespace UN5_Event_Editor
             }
             if (ScriptList.ccs_tbl.Count == 0)
             {
-                ScriptList.Read(ccsList[1].blocks[17].Data, ccsList[1].blocks[18].Data);
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
             }
             for (int i = 0; i < eventKindList.Count; i++)
             {
@@ -245,7 +245,7 @@ namespace UN5_Event_Editor
         private void button7_Click(object sender, EventArgs e)
         {
             EditPlchList form = new EditPlchList();
-            MemoryStream ms = new MemoryStream(ccsList[1].blocks[8].Data);
+            MemoryStream ms = new MemoryStream(ccsList[1].blocks[6].Data);
             if (plchList.Count == 0)
             {
                 byte[] plchBlock = new byte[0x4];
@@ -257,7 +257,7 @@ namespace UN5_Event_Editor
             }
             if (ScriptList.ccs_tbl.Count == 0)
             {
-                ScriptList.Read(ccsList[1].blocks[17].Data, ccsList[1].blocks[18].Data);
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
             }
             for (int i = 0; i < plchList.Count; i++)
             {
@@ -294,7 +294,7 @@ namespace UN5_Event_Editor
             }
             if(itemList.Count == 0)
             {
-                MemoryStream ms = new MemoryStream(ccsList[0].blocks[4].Data);
+                MemoryStream ms = new MemoryStream(ccsList[0].blocks[2].Data);
                 int count = int.Parse(Util.ReadStringFromMemory(ms, 0x23, (int)ms.Length, "UTF-8"));
                 for (int i = 0; i < count; i++)
                 {
@@ -314,6 +314,105 @@ namespace UN5_Event_Editor
             {
                 form.listBox1.Items.Add($"{i - 3}: {itemInfo[i][0]}");
             }
+            form.Show();
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            EditFieldItem form = new EditFieldItem();
+            MemoryStream ms = new MemoryStream();
+            int count = 0;
+            if (itemList.Count == 0)
+            {
+                ms = new MemoryStream(ccsList[0].blocks[2].Data);
+                count = int.Parse(Util.ReadStringFromMemory(ms, 0x23, (int)ms.Length, "UTF-8"));
+                for (int i = 0; i < count; i++)
+                {
+                    byte[] itemBlock = new byte[0x1C];
+                    ms.Read(itemBlock, 0, itemBlock.Length);
+                    itemList.Add(Item.Read(itemBlock));
+                }
+                for (int i = 0; i < count + 3; i++)
+                {
+                    string itemName = Util.ReadStringFromMemory(ms, 0x23, (int)ms.Length, "ISO-8859-1");
+                    string itemDescription = Util.ReadStringFromMemory(ms, 0x23, (int)ms.Length, "ISO-8859-1");
+                    itemInfo.Add(new string[] { itemName, itemDescription });
+                }
+            }
+            if(form.cmbItemID.Items.Count == 0)
+            {
+                for(int i = 3; i < itemInfo.Count; i++)
+                {
+                    form.cmbItemID.Items.Add(itemInfo[i][0]);
+                }
+            }
+            if(fieldItemList.Count == 0)
+            {
+                ms = new MemoryStream(ccsList[1].blocks[17].Data);
+                count = int.Parse(Util.ReadStringFromMemory(ms, 0x23, (int)ms.Length, "UTF-8"));
+                for (int i = 0; i < count; i++)
+                {
+                    byte[] currentItemFieldBlock = new byte[0x1C];
+                    ms.Read(currentItemFieldBlock, 0, currentItemFieldBlock.Length);
+                    fieldItemList.Add(FieldItem.Read(currentItemFieldBlock));
+                }
+            }
+            for(int i = 0; i < fieldItemList.Count; i++)
+            {
+                int stageID = (int)fieldItemList[i].stageID;
+                form.listBox1.Items.Add($"{i}: {form.cmbStageID.Items[stageID]}");
+            }
+            form.listBox1.SelectedIndex = 0;
+            form.Show();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            EditOtherFlag form = new EditOtherFlag();
+            MemoryStream ms = new MemoryStream(ccsList[1].blocks[5].Data);
+            if (otherFlagList.Count == 0)
+            {
+                byte[] otherFlagBlock = new byte[0x8];
+                for (int i = 0; i < ms.Length / 0x8; i++)
+                {
+                    ms.Read(otherFlagBlock, 0, otherFlagBlock.Length);
+                    otherFlagList.Add(BootOtherFlag.Read(otherFlagBlock));
+                }
+            }
+            if (ScriptList.ccs_tbl.Count == 0)
+            {
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
+            }
+            for (int i = 0; i < otherFlagList.Count; i++)
+            {
+                form.listBox1.Items.Add($"{i}: {ScriptList.event_id[(int)otherFlagList[i].eventID]}");
+            }
+            form.cmbEventID.Items.AddRange(ScriptList.event_id.ToArray());
+            form.Show();
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            EditSpc form = new EditSpc();
+            MemoryStream ms = new MemoryStream(ccsList[1].blocks[8].Data);
+            if (spcList.Count == 0)
+            {
+                byte[] spcBlock = new byte[0x8];
+                for (int i = 0; i < ms.Length / 0x8; i++)
+                {
+                    ms.Read(spcBlock, 0, spcBlock.Length);
+                    spcList.Add(BootSpc.Read(spcBlock));
+                }
+            }
+            if (ScriptList.ccs_tbl.Count == 0)
+            {
+                ScriptList.Read(ccsList[1].blocks[15].Data, ccsList[1].blocks[16].Data);
+            }
+            for (int i = 0; i < spcList.Count; i++)
+            {
+                form.listBox1.Items.Add($"{i}: {ScriptList.event_id[(int)spcList[i].eventID]}");
+            }
+            form.cmbEventID.Items.AddRange(ScriptList.event_id.ToArray());
             form.Show();
         }
     }

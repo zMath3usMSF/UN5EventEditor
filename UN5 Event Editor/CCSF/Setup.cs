@@ -20,11 +20,11 @@ namespace UN5_Event_Editor
             ms.Read(Data, 0, Data.Length);
         }
 
-        public static byte[] Write()
+        public static byte[] Write(int index)
         {
             MemoryStream ms = new MemoryStream();
             ms.Write(BitConverter.GetBytes(Convert.ToUInt32(0xCCCC0003)), 0, 4);
-            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(0x00)), 0, 4);
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(index)), 0, 4);
             return ms.ToArray();
         }
         public static byte[] WriteEnd()

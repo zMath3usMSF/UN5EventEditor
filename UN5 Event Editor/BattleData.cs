@@ -17,7 +17,7 @@ namespace UN5_Event_Editor
                     Ultimate3Player2, Stage, SelectionMode;
         public static BattleData Read(byte[] Input) => new BattleData
         {
-            battleName = Util.ReadStringFromBuffer(Input.ReadBytes(0x0, 0x80), 0, 0x80, "ISO-8859-1"),
+            battleName = Util.ReadStringFromBuffer(Input.ReadBytes(0x0, 0x80), 0x80, "ISO-8859-1"),
             RyoLose = Input.ReadUInt(0x80, 32),
             RyoWin = Input.ReadUInt(0x84, 32),
             Difficulty = Input.ReadUInt(0x88, 8),

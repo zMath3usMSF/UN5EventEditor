@@ -29,7 +29,7 @@ namespace UN5_Event_Editor
             return BitConverter.ToInt32(buffer, 0);
         }
 
-        public static string ReadStringFromBuffer(byte[] buff, int pos, int len, string encoding)
+        public static string ReadStringFromBuffer(byte[] buff, int len, string encoding)
         {
             List<byte> fileStrBytes = new List<byte>();
             MemoryStream ms = new MemoryStream(buff);

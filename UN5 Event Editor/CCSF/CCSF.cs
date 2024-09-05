@@ -37,29 +37,15 @@ namespace UN5_Event_Editor
             Block.ReadAllBlocks(ms, this);
         }
 
-        public static void WriteCCS(CCSF ccs)
+        public static void WriteCCS(CCSF ccs, string pathSFD)
         {
             MemoryStream ms = new MemoryStream();
-            byte[] headerData = Header.Write(ccs.header.Name.Replace("CCSF", ""));
-            ms.Write(headerData, 0, headerData.Length);
-            byte[] tocData = TOC.Write(ccs.blocks, ccs);
-            ms.Write(tocData, 0, tocData.Length);
-            byte[] setupData = Setup.Write();
-            ms.Write(setupData, 0, setupData.Length);
-            for (int i = 3; i < ccs.blocks.Count; i++)
-            {
-                byte[] binaryData = BinaryBlob.Write(ccs.blocks[i].Data, i);
-                ms.Write(binaryData, 0, binaryData.Length);
-            }
-            byte[] endSetupBytes = Setup.WriteEnd();
-            ms.Write(endSetupBytes, 0, endSetupBytes.Length);
-            byte[] ok = ms.ToArray();
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"{ccs.header.Name.Replace("CCSF", "")}.ccs".ToUpper());
-            byte[] ccsGzip = Compress(ok, ccs.header.Name.Replace("CCSF", ""));
-            File.WriteAllBytes(path, ccsGzip);
+            ms = Block.WriteAllBlocks(ms, ccs);
+            byte[] ccsGzip = CompressToGZip(ms.ToArray(), ccs.header.Name.Replace("CCSF", ""));
+            File.WriteAllBytes(pathSFD, ccsGzip);
         }
 
-        public static byte[] Compress(byte[] data, string Name)
+        public static byte[] CompressToGZip(byte[] data, string Name)
         {
             MemoryStream ms = new MemoryStream();
             GZipOutputStream gs = new GZipOutputStream(ms);
@@ -68,6 +54,20 @@ namespace UN5_Event_Editor
             gs.Write(data, 0, data.Length);
             gs.Close();
             return ms.ToArray();
+        }
+
+        public static byte[] GetBlockByName(List<Block> blocks, string bName)
+        {
+            bName = "BIN_" + bName;
+            byte[] bData = new byte[0];
+            for (int i = 0; i < blocks.Count; i++)
+            {
+                if (blocks[i].Name == bName)
+                {
+                    bData = blocks[i].Data;
+                }
+            }
+            return bData;
         }
     }
 }

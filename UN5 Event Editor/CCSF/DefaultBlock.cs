@@ -18,5 +18,22 @@ namespace UN5_Event_Editor
             Data = new byte[Size * 4 - 4];
             ms.Read(Data, 0, Data.Length);
         }
+
+        public static byte[] Write(byte[] data, int index)
+        {
+            MemoryStream ms = new MemoryStream();
+            MemoryStream dataS = new MemoryStream();
+            dataS.Write(data, 0, data.Length);
+            while (dataS.Length % 4 != 0)
+            {
+                dataS.WriteByte(0x0);
+            }
+            data = dataS.ToArray();
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(0xCCCC2400)), 0, 4);
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(data.Length + 4) / 4), 0, 4);
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt32(index)), 0, 4);
+            ms.Write(dataS.ToArray(), 0, dataS.ToArray().Length);
+            return ms.ToArray();
+        }
     }
 }
