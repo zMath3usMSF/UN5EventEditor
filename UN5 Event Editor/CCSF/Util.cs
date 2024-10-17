@@ -162,5 +162,12 @@ namespace UN5_Event_Editor
             DateTimeOffset unixEpoch = new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero);
             return (long)(now - unixEpoch).TotalSeconds;
         }
+
+        public static void WriteBytesToDesktop(byte[] buffer)
+        {
+            string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string path = Path.Combine(desktop, "output.bin");
+            File.WriteAllBytes(path, buffer);
+        }
     }
 }

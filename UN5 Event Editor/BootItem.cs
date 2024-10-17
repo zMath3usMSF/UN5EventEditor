@@ -7,24 +7,25 @@ using System.Threading.Tasks;
 
 namespace UN5_Event_Editor
 {
-    public class BootSpc
+    public class BootItem
     {
-        public uint treeIndex, eventID, charID, isTeam;
-        public static BootSpc Read(byte[] Input) => new BootSpc
+        public uint treeIndex, eventID, itemID, stockCount;
+        public static BootItem Read(byte[] Input) => new BootItem
         {
             treeIndex = Input.ReadUInt(0x0, 16),
             eventID = Input.ReadUInt(0x2, 16),
-            charID = Input.ReadUInt(0x4, 16),
-            isTeam = Input.ReadUInt(0x6, 16),
+            itemID = Input.ReadUInt(0x4, 16),
+            stockCount = Input.ReadUInt(0x7, 8),
         };
 
-        public static byte[] Write(BootSpc bootTalk)
+        public static byte[] Write(BootItem bootTalk)
         {
             MemoryStream ms = new MemoryStream();
             ms.Write(BitConverter.GetBytes(Convert.ToUInt16(bootTalk.treeIndex)), 0, 2);
             ms.Write(BitConverter.GetBytes(Convert.ToUInt16(bootTalk.eventID)), 0, 2);
-            ms.Write(BitConverter.GetBytes(Convert.ToUInt16(bootTalk.charID)), 0, 2);
-            ms.Write(BitConverter.GetBytes(Convert.ToUInt16(bootTalk.isTeam)), 0, 2);
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt16(bootTalk.itemID)), 0, 2);
+            ms.WriteByte(0x3);
+            ms.WriteByte((byte)bootTalk.stockCount);
             return ms.ToArray();
         }
     }

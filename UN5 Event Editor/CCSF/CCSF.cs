@@ -56,18 +56,15 @@ namespace UN5_Event_Editor
             return ms.ToArray();
         }
 
-        public static byte[] GetBlockByName(List<Block> blocks, string bName)
+        public static byte[] GetBlockData(CCSF ccs, string bName)
         {
-            bName = "BIN_" + bName;
-            byte[] bData = new byte[0];
-            for (int i = 0; i < blocks.Count; i++)
-            {
-                if (blocks[i].Name == bName)
-                {
-                    bData = blocks[i].Data;
-                }
-            }
+            byte[] bData = ccs.blocks.Find(block => block.Name == "BIN_" + bName).Data;
             return bData;
+        }
+        public static void SetBlockData(CCSF ccs, string bName, byte[] bData)
+        {
+            Block selectedBlock = ccs.blocks.Find(block => block.Name == "BIN_" + bName);
+            selectedBlock.Data = bData;
         }
     }
 }

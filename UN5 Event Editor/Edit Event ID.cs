@@ -60,7 +60,7 @@ namespace UN5_Event_Editor
                 byte[] currentCCS_TBL = ScriptList.WriteCCS_TBL(ScriptList.ccs_tbl[i]);
                 ms.Write(currentCCS_TBL, 0, currentCCS_TBL.Length);
             }
-            Form1.ccsList[1].blocks[17].Data = ms.ToArray();
+            CCSF.SetBlockData(Form1.ccsList[1], "ccs_tbl", ms.ToArray());
             ms = new MemoryStream();
             byte[] event_idCountBytes = Encoding.UTF8.GetBytes(ScriptList.event_id.Count.ToString());
             ms.Write(event_idCountBytes, 0, event_idCountBytes.Length);
@@ -70,7 +70,7 @@ namespace UN5_Event_Editor
                 byte[] currentEvent_ID = ScriptList.WriteEvent_ID(ScriptList.event_id[i]);
                 ms.Write(currentEvent_ID, 0, currentEvent_ID.Length);
             }
-            Form1.ccsList[1].blocks[18].Data = ms.ToArray();
+            CCSF.SetBlockData(Form1.ccsList[1], "event_id", ms.ToArray());
             listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
         }
     }

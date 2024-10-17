@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -60,6 +60,9 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>UN5Icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -93,10 +96,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Add New Event.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Add New Event.Designer.cs">
+      <DependentUpon>Add New Event.cs</DependentUpon>
+    </Compile>
     <Compile Include="BattleData.cs" />
+    <Compile Include="BootItem.cs" />
     <Compile Include="BootOtherFlag.cs" />
     <Compile Include="BootSpc.cs" />
+    <Compile Include="BootSphere.cs" />
+    <Compile Include="BootStage.cs" />
     <Compile Include="BootTalk.cs" />
+    <Compile Include="BootTime.cs" />
     <Compile Include="CCSF\IOextent.cs" />
     <Compile Include="CCSF\Util.cs" />
     <Compile Include="CharData.cs" />
@@ -110,65 +123,29 @@
     <Compile Include="CCSF\Block.cs" />
     <Compile Include="CCSF\CCSF.cs" />
     <Compile Include="CCSF\DefaultBlock.cs" />
-    <Compile Include="Edit Boot Talk.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Edit Boot Talk.Designer.cs">
-      <DependentUpon>Edit Boot Talk.cs</DependentUpon>
-    </Compile>
     <Compile Include="Edit Char Data.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Edit Char Data.Designer.cs">
       <DependentUpon>Edit Char Data.cs</DependentUpon>
     </Compile>
-    <Compile Include="Edit Event Kind.cs">
+    <Compile Include="Edit Event ID.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Edit Event Kind.Designer.cs">
-      <DependentUpon>Edit Event Kind.cs</DependentUpon>
+    <Compile Include="Edit Event ID.Designer.cs">
+      <DependentUpon>Edit Event ID.cs</DependentUpon>
     </Compile>
-    <Compile Include="Edit Script List.cs">
+    <Compile Include="Edit Field Item.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Edit Script List.Designer.cs">
-      <DependentUpon>Edit Script List.cs</DependentUpon>
+    <Compile Include="Edit Field Item.Designer.cs">
+      <DependentUpon>Edit Field Item.cs</DependentUpon>
     </Compile>
-    <Compile Include="Edit Event Flag.cs">
+    <Compile Include="Edit Item.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Edit Event Flag.Designer.cs">
-      <DependentUpon>Edit Event Flag.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditFieldItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditFieldItem.Designer.cs">
-      <DependentUpon>EditFieldItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditItem.Designer.cs">
-      <DependentUpon>EditItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditOtherFlag.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditOtherFlag.Designer.cs">
-      <DependentUpon>EditOtherFlag.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditPlchList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditPlchList.Designer.cs">
-      <DependentUpon>EditPlchList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EditSpc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EditSpc.Designer.cs">
-      <DependentUpon>EditSpc.cs</DependentUpon>
+    <Compile Include="Edit Item.Designer.cs">
+      <DependentUpon>Edit Item.cs</DependentUpon>
     </Compile>
     <Compile Include="EventFlag.cs" />
     <Compile Include="EventKind.cs" />
@@ -181,45 +158,36 @@
     </Compile>
     <Compile Include="CCSF\Header.cs" />
     <Compile Include="Item.cs" />
-    <Compile Include="Plch.cs" />
+    <Compile Include="BootPlch.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CCSF\Setup.cs" />
     <Compile Include="CCSF\TOC.cs" />
     <Compile Include="ReadEvent.cs" />
     <Compile Include="ScriptList.cs" />
+    <Compile Include="Edit Event Tree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Edit Event Tree.Designer.cs">
+      <DependentUpon>Edit Event Tree.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Add New Event.resx">
+      <DependentUpon>Add New Event.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Edit Battle Data.resx">
       <DependentUpon>Edit Battle Data.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Edit Boot Talk.resx">
-      <DependentUpon>Edit Boot Talk.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Edit Char Data.resx">
       <DependentUpon>Edit Char Data.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Edit Event Kind.resx">
-      <DependentUpon>Edit Event Kind.cs</DependentUpon>
+    <EmbeddedResource Include="Edit Event ID.resx">
+      <DependentUpon>Edit Event ID.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Edit Script List.resx">
-      <DependentUpon>Edit Script List.cs</DependentUpon>
+    <EmbeddedResource Include="Edit Field Item.resx">
+      <DependentUpon>Edit Field Item.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Edit Event Flag.resx">
-      <DependentUpon>Edit Event Flag.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditFieldItem.resx">
-      <DependentUpon>EditFieldItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditItem.resx">
-      <DependentUpon>EditItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditOtherFlag.resx">
-      <DependentUpon>EditOtherFlag.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditPlchList.resx">
-      <DependentUpon>EditPlchList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EditSpc.resx">
-      <DependentUpon>EditSpc.cs</DependentUpon>
+    <EmbeddedResource Include="Edit Item.resx">
+      <DependentUpon>Edit Item.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -232,7 +200,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Edit Event Tree.resx">
+      <DependentUpon>Edit Event Tree.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -259,6 +231,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\EVENTBackgroundImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="UN5Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditItem));
             this.label2 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.addNewItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.rchDescription = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +42,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.numPurchasePrice = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
-            this.numInventoryLimit = new System.Windows.Forms.NumericUpDown();
+            this.numStockLimit = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.numSunaPurchasePrice = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
@@ -50,12 +52,11 @@
             this.cmbEnabled = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.addNewItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUnk1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPurchasePrice)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numInventoryLimit)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numStockLimit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSunaPurchasePrice)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSellingPrice)).BeginInit();
             this.panel1.SuspendLayout();
@@ -79,6 +80,13 @@
             this.menuStrip1.Size = new System.Drawing.Size(839, 24);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // addNewItemToolStripMenuItem
+            // 
+            this.addNewItemToolStripMenuItem.Name = "addNewItemToolStripMenuItem";
+            this.addNewItemToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
+            this.addNewItemToolStripMenuItem.Text = "Add New Item";
+            this.addNewItemToolStripMenuItem.Click += new System.EventHandler(this.addNewItemToolStripMenuItem_Click);
             // 
             // listBox1
             // 
@@ -168,26 +176,26 @@
             this.label6.TabIndex = 18;
             this.label6.Text = "Purchase Price:";
             // 
-            // numInventoryLimit
+            // numStockLimit
             // 
-            this.numInventoryLimit.Location = new System.Drawing.Point(484, 151);
-            this.numInventoryLimit.Maximum = new decimal(new int[] {
+            this.numStockLimit.Location = new System.Drawing.Point(484, 151);
+            this.numStockLimit.Maximum = new decimal(new int[] {
             -1,
             0,
             0,
             0});
-            this.numInventoryLimit.Name = "numInventoryLimit";
-            this.numInventoryLimit.Size = new System.Drawing.Size(64, 20);
-            this.numInventoryLimit.TabIndex = 21;
+            this.numStockLimit.Name = "numStockLimit";
+            this.numStockLimit.Size = new System.Drawing.Size(64, 20);
+            this.numStockLimit.TabIndex = 21;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(400, 153);
+            this.label7.Location = new System.Drawing.Point(416, 153);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(78, 13);
+            this.label7.Size = new System.Drawing.Size(62, 13);
             this.label7.TabIndex = 20;
-            this.label7.Text = "Inventory Limit:";
+            this.label7.Text = "Stock Limit:";
             // 
             // numSunaPurchasePrice
             // 
@@ -277,7 +285,7 @@
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.txtName);
-            this.panel1.Controls.Add(this.numInventoryLimit);
+            this.panel1.Controls.Add(this.numStockLimit);
             this.panel1.Controls.Add(this.numUnk1);
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label4);
@@ -289,13 +297,6 @@
             this.panel1.Size = new System.Drawing.Size(565, 426);
             this.panel1.TabIndex = 63;
             this.panel1.Visible = false;
-            // 
-            // addNewItemToolStripMenuItem
-            // 
-            this.addNewItemToolStripMenuItem.Name = "addNewItemToolStripMenuItem";
-            this.addNewItemToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
-            this.addNewItemToolStripMenuItem.Text = "Add New Item";
-            this.addNewItemToolStripMenuItem.Click += new System.EventHandler(this.addNewItemToolStripMenuItem_Click);
             // 
             // cmbCategory
             // 
@@ -320,14 +321,18 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "EditItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EditItem";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUnk1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPurchasePrice)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numInventoryLimit)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numStockLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSunaPurchasePrice)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSellingPrice)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -351,7 +356,7 @@
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.NumericUpDown numPurchasePrice;
         private System.Windows.Forms.Label label6;
-        public System.Windows.Forms.NumericUpDown numInventoryLimit;
+        public System.Windows.Forms.NumericUpDown numStockLimit;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.NumericUpDown numSunaPurchasePrice;
         private System.Windows.Forms.Label label8;

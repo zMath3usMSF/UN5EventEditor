@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditScriptList));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.addNewScriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -54,8 +55,8 @@
             // addNewScriptToolStripMenuItem
             // 
             this.addNewScriptToolStripMenuItem.Name = "addNewScriptToolStripMenuItem";
-            this.addNewScriptToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
-            this.addNewScriptToolStripMenuItem.Text = "Add New Script";
+            this.addNewScriptToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
+            this.addNewScriptToolStripMenuItem.Text = "Add New Event ID";
             this.addNewScriptToolStripMenuItem.Click += new System.EventHandler(this.addNewScriptToolStripMenuItem_Click);
             // 
             // listBox1
@@ -132,9 +133,13 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "EditScriptList";
-            this.Text = "Edit Script List:";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Edit Event ID List:";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -147,7 +152,6 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtCCS_TBL;
@@ -155,5 +159,6 @@
         private System.Windows.Forms.ToolStripMenuItem addNewScriptToolStripMenuItem;
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.ListBox listBox1;
     }
 }

@@ -14,7 +14,10 @@ namespace UN5_Event_Editor
         public EditItem()
         {
             InitializeComponent();
-
+            listBox1.SelectedIndexChanged +=ListBox1_SelectedIndexChanged;
+        }
+        public void CreateIcon()
+        {
             comboBox = new ComboBox
             {
                 Location = new Point(317, 27),
@@ -26,16 +29,14 @@ namespace UN5_Event_Editor
             };
             comboBox.DropDownHeight = 256;
             comboBox.DrawItem += ComboBox_DrawItem;
-            for(int i = 0; i < Form1.itemIconsList.Count; i++)
+            for (int i = 0; i < Form1.itemIconsList.Count; i++)
             {
                 comboBox.Items.Add(Form1.itemIconsList[i]);
             }
             comboBox.SelectedIndex = 0;
             comboBox.Visible = false;
             Controls.Add(comboBox);
-            listBox1.SelectedIndexChanged +=ListBox1_SelectedIndexChanged;
         }
-
         private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = listBox1.SelectedIndex;
@@ -49,7 +50,7 @@ namespace UN5_Event_Editor
             numPurchasePrice.Value = Form1.itemList[index].normalPurchasePrice;
             numSunaPurchasePrice.Value = Form1.itemList[index].sunaPurchasePrice;
             numSellingPrice.Value = Form1.itemList[index].sellingPrice;
-            numInventoryLimit.Value = Form1.itemList[index].inventoryLimit;
+            numStockLimit.Value = Form1.itemList[index].inventoryLimit;
             cmbEnabled.SelectedIndex = (int)Form1.itemList[index].enabled;
         }
 
@@ -76,11 +77,12 @@ namespace UN5_Event_Editor
             itemList.normalPurchasePrice = (uint)numPurchasePrice.Value;
             itemList.sunaPurchasePrice = (uint)numSunaPurchasePrice.Value;
             itemList.sellingPrice = (uint)numSellingPrice.Value;
-            itemList.inventoryLimit = (uint)numInventoryLimit.Value;
+            itemList.inventoryLimit = (uint)numStockLimit.Value;
             itemList.enabled = (uint)cmbEnabled.SelectedIndex;
 
             MemoryStream ms = new MemoryStream();
-            byte[] itemInfoCountBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes($"{Form1.itemInfo.Count - 3}");
+            string encoding = Form1.isNA2 == true ? "shift-jis" : "ISO-8859-1";
+            byte[] itemInfoCountBytes = Encoding.GetEncoding(encoding).GetBytes($"{Form1.itemInfo.Count - 3}");
             ms.Write(itemInfoCountBytes, 0, itemInfoCountBytes.Length);
             ms.WriteByte(0x23);
             for (int i = 0; i <  Form1.itemList.Count; i++)
@@ -90,8 +92,8 @@ namespace UN5_Event_Editor
             }
             for (int i = 0; i <  Form1.itemInfo.Count; i++)
             {
-                byte[] itemNameBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(Form1.itemInfo[i][0]);
-                byte[] itemDescriptionBytes = Encoding.GetEncoding("ISO-8859-1").GetBytes(Form1.itemInfo[i][1]);
+                byte[] itemNameBytes = Encoding.GetEncoding(encoding).GetBytes(Form1.itemInfo[i][0]);
+                byte[] itemDescriptionBytes = Encoding.GetEncoding(encoding).GetBytes(Form1.itemInfo[i][1]);
                 ms.Write(itemNameBytes, 0, itemNameBytes.Length);
                 ms.WriteByte(0x23);
                 ms.Write(itemDescriptionBytes, 0, itemDescriptionBytes.Length);
@@ -103,7 +105,6 @@ namespace UN5_Event_Editor
             }
             Form1.ccsList[0].blocks[4].Data = ms.ToArray();
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            File.WriteAllBytes(Path.Combine(desktop, "item.bin"), ms.ToArray());
             listBox1.SelectedIndexChanged +=ListBox1_SelectedIndexChanged;
         }
 

@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditFieldItem));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.addNewFieldItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -49,6 +51,7 @@
             this.cmbObject = new System.Windows.Forms.ComboBox();
             this.cmbDisarm = new System.Windows.Forms.ComboBox();
             this.cmbVerify = new System.Windows.Forms.ComboBox();
+            this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPosX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosZ)).BeginInit();
@@ -57,11 +60,20 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addNewFieldItemToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(948, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // addNewFieldItemToolStripMenuItem
+            // 
+            this.addNewFieldItemToolStripMenuItem.Name = "addNewFieldItemToolStripMenuItem";
+            this.addNewFieldItemToolStripMenuItem.Size = new System.Drawing.Size(123, 20);
+            this.addNewFieldItemToolStripMenuItem.Text = "Add New Field Item";
+            this.addNewFieldItemToolStripMenuItem.Click += new System.EventHandler(this.addNewFieldItemToolStripMenuItem_Click);
             // 
             // listBox1
             // 
@@ -387,9 +399,15 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.Name = "EditFieldItem";
-            this.Text = "EditFieldItem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Edit Field Item:";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numPosX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPosZ)).EndInit();
@@ -422,5 +440,6 @@
         public System.Windows.Forms.ComboBox cmbObject;
         public System.Windows.Forms.ComboBox cmbDisarm;
         public System.Windows.Forms.ComboBox cmbVerify;
+        private System.Windows.Forms.ToolStripMenuItem addNewFieldItemToolStripMenuItem;
     }
 }

@@ -10,6 +10,7 @@ namespace UN5_Event_Editor
 {
     public class BattleData
     {
+        public static string encoding = Form1.isNA2 == true ? "shift-jis" : "ISO-8859-1";
         public string battleName;
         public uint RyoLose, RyoWin, Difficulty, AllowRetry, GameOver, Time, Player1ID, Player2ID, Suporte1ID, Suporte2ID,
                     Condition1, Condition2, Condition3, Condition4, Jutsu1Player1, Jutsu2Player1, Jutsu1Player2,
@@ -17,7 +18,7 @@ namespace UN5_Event_Editor
                     Ultimate3Player2, Stage, SelectionMode;
         public static BattleData Read(byte[] Input) => new BattleData
         {
-            battleName = Util.ReadStringFromBuffer(Input.ReadBytes(0x0, 0x80), 0x80, "ISO-8859-1"),
+            battleName = Util.ReadStringFromBuffer(Input.ReadBytes(0x0, 0x80), 0x80, encoding),
             RyoLose = Input.ReadUInt(0x80, 32),
             RyoWin = Input.ReadUInt(0x84, 32),
             Difficulty = Input.ReadUInt(0x88, 8),

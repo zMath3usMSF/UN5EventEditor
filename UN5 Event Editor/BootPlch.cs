@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace UN5_Event_Editor
 {
-    public class Plch
+    public class BootPlch
     {
-        public uint unk1, eventID;
-        public static Plch Read(byte[] Input) => new Plch
+        public uint treeIndex, eventID;
+        public static BootPlch Read(byte[] Input) => new BootPlch
         {
-            unk1 = Input.ReadUInt(0x0, 16),
+            treeIndex = Input.ReadUInt(0x0, 16),
             eventID = Input.ReadUInt(0x2, 16),
         };
 
-        public static byte[] Write(Plch eventKind)
+        public static byte[] Write(BootPlch eventKind)
         {
             MemoryStream ms = new MemoryStream();
-            ms.Write(BitConverter.GetBytes(Convert.ToUInt16(eventKind.unk1)), 0, 2);
+            ms.Write(BitConverter.GetBytes(Convert.ToUInt16(eventKind.treeIndex)), 0, 2);
             ms.Write(BitConverter.GetBytes(Convert.ToUInt16(eventKind.eventID)), 0, 2);
             return ms.ToArray();
         }

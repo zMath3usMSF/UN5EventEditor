@@ -89,5 +89,12 @@ namespace UN5_Event_Editor
             File.WriteAllBytes(Path.Combine(desktop, "fieldItem.bin"), ms.ToArray());
             Form1.ccsList[1].blocks[17].Data = ms.ToArray();
         }
+
+        private void addNewFieldItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Add($"{listBox1.Items.Count}: Konoha Gate");
+            Form1.fieldItemList.Add(new FieldItem() { ID = (uint)Form1.fieldItemList.Count });
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+        }
     }
 }
