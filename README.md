@@ -1,0 +1,3 @@
+![EVENTBackgroundImage](https://github.com/user-attachments/assets/758e06e6-cd51-44da-928f-6cd6948dc9ef)
+# About
+The UN5 EVENT Editor is a tool designed to edit the "EVENT.CCS" file in the ADV folder of the game Naruto Shippuden: Ultimate Ninja 5.<br>This file makes general settings for Events and other things related to Master Mode, such as: Event Order Settings, NPC Settings, Item Settings, Item Spawn Settings, Battle Settings, etc...
