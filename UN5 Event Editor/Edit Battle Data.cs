@@ -66,8 +66,14 @@ namespace UN5_Event_Editor
             {
                 ms.Write(battleDataBlocksList[i], 0, battleDataBlocksList[i].Length);
             }
-            File.WriteAllBytes(Path.Combine(desktop, "output.bin"), ms.ToArray());
-            Form1.ccsList[0].blocks[3].Data = ms.ToArray();
+            if(Form1.isNA2 == true)
+            {
+                CCSF.SetBlockData(Form1.ccsList[1], "battledata", ms.ToArray());
+            }
+            else
+            {
+                CCSF.SetBlockData(Form1.ccsList[0], "battledatatxt", ms.ToArray());
+            }
             listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
         }
         private void battleToolStripMenuItem_Click(object sender, EventArgs e)

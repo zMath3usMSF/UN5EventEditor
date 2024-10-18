@@ -87,7 +87,7 @@ namespace UN5_Event_Editor
             }
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             File.WriteAllBytes(Path.Combine(desktop, "fieldItem.bin"), ms.ToArray());
-            Form1.ccsList[1].blocks[17].Data = ms.ToArray();
+            CCSF.SetBlockData(Form1.ccsList[1], "fielditem", ms.ToArray());
         }
 
         private void addNewFieldItemToolStripMenuItem_Click(object sender, EventArgs e)

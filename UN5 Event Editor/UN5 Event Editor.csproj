@@ -63,6 +63,7 @@
   <PropertyGroup>
     <ApplicationIcon>UN5Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -234,8 +235,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\EVENTBackgroundImage.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="UN5Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -103,7 +103,14 @@ namespace UN5_Event_Editor
             {
                 ms.WriteByte(0x0);
             }
-            Form1.ccsList[0].blocks[4].Data = ms.ToArray();
+            if (Form1.isNA2 == true)
+            {
+                CCSF.SetBlockData(Form1.ccsList[1], "item", ms.ToArray());
+            }
+            else
+            {
+                CCSF.SetBlockData(Form1.ccsList[0], "itemtxt", ms.ToArray());
+            }
             string desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             listBox1.SelectedIndexChanged +=ListBox1_SelectedIndexChanged;
         }

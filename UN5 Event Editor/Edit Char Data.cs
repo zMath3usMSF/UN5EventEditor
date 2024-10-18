@@ -100,7 +100,7 @@ namespace UN5_Event_Editor
             {
                 ms.Write(Form1.charDataBlocksList[i], 0, Form1.charDataBlocksList[i].Length);
             }
-            Form1.ccsList[1].blocks[16].Data = ms.ToArray();
+            CCSF.SetBlockData(Form1.ccsList[1], "chardata", ms.ToArray());
             listBox1.SelectedIndexChanged += ListBox1_SelectedIndexChanged;
         }
 
